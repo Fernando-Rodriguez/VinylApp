@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Models\" />
+    <None Remove="Models\CoreModels\" />
+    <None Remove="Models\AuthorizationModels\" />
+    <None Remove="Services\" />
+    <None Remove="Models\VinylAppModels\" />
+    <None Remove="Models\VinylAppModels\AlbumAggregate\" />
+    <None Remove="Microsoft.IdentityModel.Tokens" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="DTOs\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="DTOs\SpotifyDTOs\" />
+    <None Remove="Models\VinylAppModels\GroupAggregate\" />
+    <None Remove="Models\VinylAppModels\UserAggregate\" />
+    <None Remove="DTOs\ExternalDTOs\" />
+    <None Remove="BCrypt.Net-Next" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Models\AuthorizationModels" />
+    <Folder Include="Models\CoreModels\" />
+    <Folder Include="Models\AuthorizationModels\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\VinylAppModels\" />
+    <Folder Include="Models\VinylAppModels\AlbumAggregate\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\SpotifyDTOs\" />
+    <Folder Include="Models\VinylAppModels\GroupAggregate\" />
+    <Folder Include="Models\VinylAppModels\UserAggregate\" />
+    <Folder Include="DTOs\ExternalDTOs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+  </ItemGroup>
+</Project>

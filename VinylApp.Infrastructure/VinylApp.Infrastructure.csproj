@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UnitOfWork\" />
+    <None Remove="DbContext\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Pomelo.EntityFrameworkCore.MySql" />
+    <None Remove="ExternalServices\" />
+    <None Remove="Microsoft.IdentityModel.Tokens" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Services\SpotifyService\" />
+    <None Remove="Services\AuthServices\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Persistance\" />
+    <None Remove="Persistance\DbContexts\" />
+    <None Remove="Persistance\Migrations\" />
+    <None Remove="Persistance\Repository\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations" />
+    <Folder Include="Persistence\Migrations" />
+    <Folder Include="UnitOfWork\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\SpotifyService\" />
+    <Folder Include="Services\AuthServices\" />
+    <Folder Include="Persistence\" />
+    <Folder Include="Persistence\DbContexts\" />
+    <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistence\Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.9" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VinylApp.Domain\VinylApp.Domain.csproj" />
+  </ItemGroup>
+</Project>
