@@ -21,7 +21,7 @@ namespace VinylApp.Infrastructure.Persistence.Repository
         public override async Task Add(AlbumItem album)
         {
             var albumUrl = await DataMatcher(album);
-            album.AlbumArtworkUrl = albumUrl;
+            album.UpdateArtworkUrl(albumUrl);
             _context.AlbumItems.Add(album);
         }
 

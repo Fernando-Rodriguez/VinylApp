@@ -22,15 +22,12 @@
     <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations" />
-    <Folder Include="Persistence\Migrations" />
     <Folder Include="UnitOfWork\" />
     <Folder Include="Services\" />
     <Folder Include="Services\SpotifyService\" />
     <Folder Include="Services\AuthServices\" />
     <Folder Include="Persistence\" />
     <Folder Include="Persistence\DbContexts\" />
-    <Folder Include="Persistence\Migrations\" />
     <Folder Include="Persistence\Repository\" />
   </ItemGroup>
   <ItemGroup>
