@@ -132,5 +132,3 @@ namespace VinylApp.Api.Controllers
         }
     }
 }
-
-

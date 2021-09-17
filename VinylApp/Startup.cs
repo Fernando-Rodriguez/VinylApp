@@ -47,23 +47,15 @@ namespace VinylApp.Api
             });
 
             services.AddCors(options =>
-            {
-                options.AddPolicy(name: "AllowedOrigins",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("https://localhost:3000");
-
-                                  });
+            { 
+                options.AddPolicy(name: "AllowedOrigins", builder =>
+                {
+                    builder.WithOrigins("https://localhost:3000");
+                });
             });
 
             services
                 .AddAuthentication("OAuth")
-                .AddCookie(config =>
-                {
-                    config.Cookie.HttpOnly = true;
-                    config.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                    config.Cookie.Name = "vinyl_app";
-                })
                 .AddJwtBearer("OAuth", opts =>
                 {
                    var symmetricKey = Encoding
@@ -94,11 +86,9 @@ namespace VinylApp.Api
             services.AddScoped<ISpotifyRequestClient, SpotifyRequestClient>();
             services.AddScoped<IAuthModel, JwtAuth>();
             services.AddScoped<IAuthService, JwtService>();
-
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

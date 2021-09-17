@@ -101,7 +101,7 @@ namespace VinylApp.Api.Controllers
             {
                 var user = await _userService.RetrieveUser(HttpContext);
                 var userFromDb = await _unitOfWork.Users.GetById(int.Parse(user.Id));
-                var userGroup = userFromDb.GetMyGroupbyId(dto.Id);
+                var userGroup = userFromDb.GetMyGroupById(dto.Id);
                 userGroup.UpdateGroupName(dto.Name);
                 await _unitOfWork.SaveChanges();
                 return Ok();

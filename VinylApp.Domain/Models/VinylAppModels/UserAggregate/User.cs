@@ -61,7 +61,7 @@ namespace VinylApp.Domain.Models.VinylAppModels.UserAggregate
             return Groups;
         }
 
-        public Group GetMyGroupbyId(int id)
+        public Group GetMyGroupById(int id)
         {
             return Groups.FirstOrDefault(g => g.Id == id);
         }

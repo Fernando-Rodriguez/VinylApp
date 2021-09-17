@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using VinylApp.Domain.Models.VinylAppModels;
 using VinylApp.Domain.Models.VinylAppModels.AlbumAggregate;
 using VinylApp.Domain.Models.VinylAppModels.GroupAggregate;
 using VinylApp.Domain.Models.VinylAppModels.UserAggregate;
@@ -10,9 +9,7 @@ namespace VinylApp.Infrastructure.Persistence.DbContexts
 {
     public class VinylAppContext : DbContext
     {
-        public VinylAppContext(DbContextOptions<VinylAppContext> options) : base(options)
-        {
-        }
+        public VinylAppContext(DbContextOptions<VinylAppContext> options) : base(options) { }
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<AlbumItem> AlbumItems { get; set; }
@@ -43,5 +40,4 @@ namespace VinylApp.Infrastructure.Persistence.DbContexts
             return new VinylAppContext(builder.Options);
         }
     }
-
 }
