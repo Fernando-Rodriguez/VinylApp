@@ -8,6 +8,7 @@ using VinylApp.Domain.Models.VinylAppModels.AlbumAggregate;
 using VinylApp.Domain.DTOs.ExternalDTOs;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using VinylApp.Domain.DTOs.InternalDTOs;
 
 namespace VinylApp.Api.Controllers
 {
@@ -35,9 +36,19 @@ namespace VinylApp.Api.Controllers
             try
             {
                 var allAlbums = await _unitOfWork.Albums.GetAll();
-                return Ok(new
+
+                return Ok(new MultipleItemResponseDto
                 {
-                    albums = allAlbums
+                    Root = allAlbums.Select(x => new SingleItemResponseDto
+                    {
+                        Item = new AlbumDTO
+                        {
+                            Id = x.Id,
+                            AlbumName = x.AlbumName,
+                            ArtistName = x.ArtistName,
+                            AlbumArtworkUrl = x.AlbumArtworkUrl
+                        }
+                    })
                 });
             }
             catch (Exception err)
@@ -54,7 +65,16 @@ namespace VinylApp.Api.Controllers
             try
             {
                 var album = await _unitOfWork.Albums.GetById(id);
-                return Ok(album);
+                return Ok(new SingleItemResponseDto
+                {
+                    Item = new AlbumDTO
+                    {
+                        Id = album.Id,
+                        AlbumName = album.AlbumName,
+                        ArtistName = album.ArtistName,
+                        AlbumArtworkUrl = album.AlbumArtworkUrl
+                    }
+                });
             }
             catch (Exception err)
             {
@@ -64,17 +84,62 @@ namespace VinylApp.Api.Controllers
             }
         }
 
-        [HttpGet("me")]
-        public async Task<IActionResult> GetMyAlbums()
+        [HttpGet("me/basic")]
+        public async Task<IActionResult> GetMyAlbumsBasic()
         {
             try
             {
                 var user = await _userService.RetrieveUser(HttpContext);
                 var userFromDb = await _unitOfWork.Users.GetById(int.Parse(user.Id));
                 var albums = userFromDb.GetCoreAlbumInfo();
-                return Ok(new
+                return Ok(new MultipleItemResponseDto
                 {
-                    albums
+                    Root = albums.Select(x => new SingleItemResponseDto
+                    {
+                        Item = new AlbumDTO
+                        {
+                            Id = x.Id,
+                            AlbumName = x.AlbumName,
+                            ArtistName = x.ArtistName,
+                            AlbumArtworkUrl = x.AlbumArtworkUrl
+                        }
+                    })
+                });
+            }
+            catch (Exception err)
+            {
+                _logger.LogError("Issue generating albums.");
+                _logger.LogError(err.ToString());
+                return Problem();
+            }
+        }
+        
+        [HttpGet("me/full")]
+        public async Task<IActionResult> GetMyAlbumsFull()
+        {
+            try
+            {
+                var user = await _userService.RetrieveUser(HttpContext);
+                var userFromDb = await _unitOfWork.Users.GetById(int.Parse(user.Id));
+                var albums = userFromDb.GetFullAlbums();
+                return Ok(new MultipleItemResponseDto
+                {
+                    Root = albums.Select(x => new SingleItemResponseDto
+                    {
+                        Item = new OwnedAlbumDTO
+                        {
+                            Id = x.Id,
+                            Album= new AlbumDTO
+                            {
+                                Id = x.AlbumItem.Id,
+                                ArtistName = x.AlbumItem.ArtistName,
+                                AlbumName = x.AlbumItem.AlbumName,
+                                AlbumArtworkUrl = x.AlbumItem.AlbumArtworkUrl
+                            },
+                            AlbumInfo = x.AlbumInfo,
+                            UserId = x.UserId
+                        }
+                    })
                 });
             }
             catch (Exception err)

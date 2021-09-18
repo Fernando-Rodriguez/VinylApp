@@ -71,6 +71,11 @@ namespace VinylApp.Domain.Models.VinylAppModels.UserAggregate
             Groups.Add(group);
         }
 
+        public List<OwnedAlbum> GetFullAlbums()
+        {
+            return Albums;
+        }
+
         public List<AlbumItem> GetCoreAlbumInfo()
         {
             return Albums.Select(x => x.AlbumItem).ToList();

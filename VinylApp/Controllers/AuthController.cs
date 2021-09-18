@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using VinylApp.Api.Services;
 using VinylApp.Domain.DTOs.ExternalDTOs;
 using VinylApp.Domain.Services;
 using VinylApp.Infrastructure.Services.AuthServices;
@@ -20,18 +21,21 @@ namespace VinylApp.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<AuthController> _logger;
         private readonly IAuthService _auth;
+        private readonly IUserServices _userService;
         private readonly IConfiguration _config;
 
         public AuthController(
             ILogger<AuthController> logger,
             IUnitOfWork unitOWork,
             IAuthService auth,
+            IUserServices userService,
             IConfiguration config)
         {
             _config = config;
             _logger = logger;
             _unitOfWork = unitOWork;
             _auth = auth;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -91,11 +95,38 @@ namespace VinylApp.Api.Controllers
             }
         }
 
-        [HttpPost("refresh")]
-        public IActionResult RefreshToken()
+        [HttpGet("refresh")]
+        public async Task<IActionResult> RefreshToken()
         {
-            return Ok("Refresh controller");
+            try
+            {
+                var user = await _userService.RetrieveRefresh(HttpContext);
+                var userFromDb = await _unitOfWork.Users.GetById(user.Id);
 
+                if (user.RefreshToken == null) return BadRequest("Must included refresh cookie");
+
+                if (userFromDb.UserAuthorization.RefreshToken != user.RefreshToken)
+                    return BadRequest("Invalid refresh token");
+
+                var token = GenerateToken(userFromDb.UserAuthorization.UserName, userFromDb.Id);
+                HttpContext.Response.Cookies.Append(
+                    "_bearer",
+                    token,
+                    new CookieOptions()
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None,
+                        IsEssential = true,
+                        Expires = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(10))
+                    });
+                return Ok();
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err.ToString());
+                return BadRequest("Error with refresh cookie.");
+            }
         }
 
         private string GenerateToken(string userName, int userId)
@@ -116,18 +147,17 @@ namespace VinylApp.Api.Controllers
 
         private string GenerateRefreshToken(string userName, int userId)
         {
+            var random = Guid.NewGuid();
             var jwt = new JwtAuth(_config)
             {
                 Claims = new []
                 {
                     new Claim("user_name", userName),
                     new Claim("user_id", userId.ToString()),
-                    new Claim("refresh_token", "family_vinyl_app")
+                    new Claim("user_role", "basic"),
                 }
             };
-
             var userSpecificRefresh = _auth.TokenGeneration(jwt);
-
             return userSpecificRefresh;
         }
     }
