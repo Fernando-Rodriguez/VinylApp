@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VinylApp.Api", "VinylApp\VinylApp.Api.csproj", "{4560FEC7-3A54-4633-9CEF-10F21BC3D40A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VinylApp.Api", "VinylApp.Api\VinylApp.Api.csproj", "{4560FEC7-3A54-4633-9CEF-10F21BC3D40A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VinylApp.Domain", "VinylApp.Domain\VinylApp.Domain.csproj", "{502E6381-B2ED-4133-803B-B77DC61CF730}"
 EndProject
