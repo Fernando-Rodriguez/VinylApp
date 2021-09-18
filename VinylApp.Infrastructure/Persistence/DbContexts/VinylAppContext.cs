@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using VinylApp.Domain.Models.VinylAppModels.AlbumAggregate;
 using VinylApp.Domain.Models.VinylAppModels.GroupAggregate;
 using VinylApp.Domain.Models.VinylAppModels.UserAggregate;
@@ -26,18 +25,6 @@ namespace VinylApp.Infrastructure.Persistence.DbContexts
                 .HasMany(p => p.Albums)
                 .WithOne(i => i.User)
                 .HasForeignKey( i => i.UserId);
-        }
-    }
-    
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<VinylAppContext>
-    {
-        public VinylAppContext CreateDbContext(string[] args)
-        {
-            const string connectionString = "server=localhost;port=3306;user=user;password=password;database=db";
-            var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
-            var builder = new DbContextOptionsBuilder<VinylAppContext>();
-            builder.UseMySql(connectionString, serverVersion);
-            return new VinylAppContext(builder.Options);
         }
     }
 }

@@ -11,6 +11,10 @@ autom4te.cache/
 tarballs/
 test-results/
 
+/VinylApp/appsetttings.json
+/VinylApp/appsettings.json
+/VinylApp/appsettings.Development.json
+
 # Mac bundle stuff
 *.dmg
 *.app
