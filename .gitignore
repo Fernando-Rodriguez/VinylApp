@@ -9,11 +9,13 @@ install-sh
 autom4te.cache/
 *.tar.gz
 tarballs/
-test-results/
 
 /VinylApp.Api/appsetttings.json
 /VinylApp.Api/appsettings.json
 /VinylApp.Api/appsettings.Development.json
+
+test-results/
+
 
 # Mac bundle stuff
 *.dmg
